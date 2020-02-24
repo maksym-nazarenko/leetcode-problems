@@ -3,48 +3,62 @@ package tasks
 import "testing"
 
 func TestRepeatedStringMatch(t *testing.T) {
-	v := repeatedStringMatch("abcd", "cdabcdab")
-	if v != 3 {
-		t.Errorf("Wanted: 3, got %d\n", v)
+	var testCases = []struct {
+		inString      string
+		desiredString string
+		wanted        int
+	}{
+		{
+			inString:      "abcd",
+			desiredString: "cdabcdab",
+			wanted:        3,
+		},
+		{
+			inString:      "a",
+			desiredString: "aa",
+			wanted:        2,
+		},
+		{
+			inString:      "a",
+			desiredString: "a",
+			wanted:        1,
+		},
+		{
+			inString:      "",
+			desiredString: "a",
+			wanted:        1,
+		},
+		{
+			inString:      "a",
+			desiredString: "",
+			wanted:        1,
+		},
+		{
+			inString:      "aa",
+			desiredString: "a",
+			wanted:        1,
+		},
+		{
+			inString:      "abc",
+			desiredString: "cabcabca",
+			wanted:        4,
+		},
+		{
+			inString:      "aaaaaaaaaaaaaaaaaaaaaab",
+			desiredString: "ba",
+			wanted:        2,
+		},
+		{
+			inString:      "abcde",
+			desiredString: "cea",
+			wanted:        -1,
+		},
 	}
 
-	v = repeatedStringMatch("a", "aa")
-	if v != 2 {
-		t.Errorf("Wanted: 2, got %d\n", v)
-	}
-
-	v = repeatedStringMatch("a", "a")
-	if v != 1 {
-		t.Errorf("Wanted: 1, got %d\n", v)
-	}
-
-	v = repeatedStringMatch("", "a")
-	if v != 1 {
-		t.Errorf("Wanted: 0, got %d\n", v)
-	}
-
-	v = repeatedStringMatch("a", "")
-	if v != 1 {
-		t.Errorf("Wanted: 0, got %d\n", v)
-	}
-
-	v = repeatedStringMatch("aa", "a")
-	if v != 1 {
-		t.Errorf("Wanted: 1, got %d\n", v)
-	}
-
-	v = repeatedStringMatch("abc", "cabcabca")
-	if v != 4 {
-		t.Errorf("Wanted: 4, got %d\n", v)
-	}
-
-	v = repeatedStringMatch("aaaaaaaaaaaaaaaaaaaaaab", "ba")
-	if v != 2 {
-		t.Errorf("Wanted: 2, got %d\n", v)
-	}
-
-	v = repeatedStringMatch("abcde", "cea")
-	if v != -1 {
-		t.Errorf("Wanted: -1, got %d\n", v)
+	for _, currentCase := range testCases {
+		v := repeatedStringMatch(currentCase.inString, currentCase.desiredString)
+		if v != currentCase.wanted {
+			t.Errorf("Wanted: %d, got %d\n", currentCase.wanted, v)
+		}
 	}
 }
