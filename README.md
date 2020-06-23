@@ -3,6 +3,10 @@
 To make it more interesting, put this as choosing algorithm for programming language:
 
 ```python
+lang = 'Go'
+
+return
+
 remainder = task_id % 10
 
 lang = 'Python'
