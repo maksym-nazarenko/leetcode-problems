@@ -10,22 +10,11 @@ package tasks
 
 func getRow(rowIndex int) []int {
 	var ret = make([]int, rowIndex+1)
+	ret[0] = 1
 
-	for i := 0; i < rowIndex+1; i++ {
-		ret[i] = getItem(rowIndex, i)
+	for i := 1; i < rowIndex+1; i++ {
+		ret[i] = ret[i-1] * (rowIndex - (i - 1)) / i
 	}
 
 	return ret
-}
-
-func getItem(k, i int) int {
-	if i == 0 || i == k {
-		return 1
-	}
-
-	if i == 1 || i == k-1 {
-		return k
-	}
-
-	return getItem(k-1, i-1) + getItem(k-1, i)
 }
