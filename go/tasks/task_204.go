@@ -1,30 +1,28 @@
 package tasks
 
 func countPrimes(n int) int {
-	var ret = 0
+
+	var isPrime []bool = make([]bool, n)
+	for i := range isPrime {
+		isPrime[i] = true
+	}
+
+	for i := 2; i*i < n; i++ {
+		if !isPrime[i] {
+			continue
+		}
+
+		for j := i * i; j < n; j += i {
+			isPrime[j] = false
+		}
+	}
+
+	ret := 0
 	for i := 2; i < n; i++ {
-		if isPrime(i) {
+		if isPrime[i] {
 			ret++
 		}
 	}
 
 	return ret
-}
-
-func isPrime(n int) bool {
-	if n <= 3 {
-		return n > 1
-	}
-
-	if n%2 == 0 || n%3 == 0 {
-		return false
-	}
-
-	for i := 5; i*i <= n; i += 6 {
-		if n%i == 0 || n%(i+2) == 0 {
-			return false
-		}
-	}
-
-	return true
 }
